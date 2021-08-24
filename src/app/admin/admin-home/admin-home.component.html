@@ -1,0 +1,108 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" routerLink="/adminp">
+      <span style="color: #5e57e4;">Let's</span> Log it
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/adminp">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/adminp/reports">Summary</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{name}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Log out</a>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="row row1 container " style="margin: auto; ">
+  <div class="col-sm-6 ">
+    <app-add-projects></app-add-projects>
+  </div>
+  <div class="col-sm-6 ">
+    <app-add-employee-manager></app-add-employee-manager>
+  </div>
+</div>
+
+<!-- <div class="accordion" id="accordionExample">
+  <div class="card"  *ngFor="let project of projectList.data ;let i = index ">
+    <div class="card-header" id="headingOne">
+      <h2 class="mb-0">
+        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" attr.data-target="#collapse_{{i}}" aria-expanded="true" aria-controls="collapseOne">
+          {{project.name}} Project Manager : {{project.project_manager}}
+        </button>
+      </h2>
+    </div>
+
+    <div id="collapse_{{i}}" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+      <div class="card-body">
+        Description : {{project.description}}
+      </div>
+    </div>
+  </div>
+
+</div> -->
+<div class="container " style="padding-left: 41px;padding-right: 41px;">
+  <label for="" class="mb-3"><strong>Projects</strong> </label>
+  <br>
+  <table class="table container">
+    <thead>
+      <tr>
+        <th scope="col" style="font-size: 14px; font-weight: 700;">#</th>
+        <th scope="col" style="font-size: 14px; font-weight: 700;">Title</th>
+        <th scope="col" style="font-size: 14px;">Owner</th>
+        <th scope="col" style="font-size: 14px;">Description</th>
+        <th scope="col" style="font-size: 14px;">Status</th>
+        <th></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let project of projectList.data ;let i = index ">
+        <td scope="row">{{i}}</td>
+        <td style="font-size: 14px;">{{project.name}}</td>
+        <td style="font-size: 14px;">{{project.manager}}</td>
+        <td style="font-size: 14px;">{{project.description}}</td>
+        <td style="font-size: 14px;">In progress</td>
+        <!-- <td style="font-size: 14px;"><input type="button" style="font-size: 13px; height: 30px;background-color: rgb(5, 114, 23); color: white;" class="btn" value="Mark as completed"></td> -->
+      </tr>
+    </tbody>
+  </table>
+  <hr>
+  <label for="" class="mt-2" style="font-weight: 700;">Employees</label>
+  <div class="row">
+    <div *ngFor="let person of employeeList; let ind = index;" class="col-md-2 text-center">
+      <div>
+        <img style="width:80px; display: inline-block;"
+          src="https://img.icons8.com/color/96/000000/circled-user-male-skin-type-6.png" />
+        <h6 class="text-center" style="margin: auto; font-size: small;margin-bottom: 0px;">{{person.name}}</h6>
+        <label class="text-center"  style="margin: auto; font-size: small;margin-bottom: 0px;margin-top: 0px;"for="">{{person.role}}</label>
+        <br>
+        <br>
+      </div>
+
+    </div>
+
+
+  </div>
+</div>
+<div id="footer">
+  <div class="container text-center">
+    <p class="text-muted credit " style="font-size: smaller;"><span style="color: #5e57e4;">Let's</span> Log it 2020</p>
+  </div>
+</div>

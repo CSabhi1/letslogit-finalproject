@@ -1,0 +1,84 @@
+<div class="container">
+  <nav class="navbar ">
+    <a class="navbar-brand" href="#">
+      <span style="color: #5e57e4;">Let's</span> Log it
+    </a>
+  </nav>
+</div>
+<div class="container">
+  <h5 class="text-center quotetxt"> We welcome you to <span class="brand" style="color: #5e57e4;">" Let's <span
+        class="logit">Log it ", </span></span>we are extreamely happy to see you here </h5>
+</div>
+
+<div class="container logincontainer">
+  <div class="row ">
+    <div class="col-sm-6 container loginform imgcontainer">
+      <img src="../../assets/images/wlcome.svg" class="img-fluid welcomeimg" alt="">
+    </div>
+    <div class="col-sm-6 container loginform ">
+      <form (submit)="userLogin(loginForm)" #loginForm="ngForm" [formGroup]=form>
+        <div class="form-group">
+          <h6 class="text-center signintxt">Sign in</h6>
+          <input type="email" placeholder="Email" ngModel name="Email" class="form-control inputbox"
+            id="exampleInputEmail1" aria-describedby="emailHelp" formControlName="Email"
+            [ngClass]="{'is-invalid':form.get('Email').touched && form.get('Email').invalid}" required>
+          <div class="invalid-feedback">
+            Email required
+          </div>
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <input type="password" placeholder="Password" ngModel name="Password" class="form-control inputbox"
+            id="exampleInputPassword1" formControlName="Password"
+            [ngClass]="{'is-invalid':form.get('Password').touched && form.get('Password').invalid}" required>
+          <div class="invalid-feedback">
+            Password required
+          </div>
+        </div>
+        <div class="form-group">
+          <small style="color: red;" *ngIf="Errormsg">Invalid credentials <i class="fa fa-frown-o"
+              aria-hidden="true"></i></small>
+        </div>
+        <div class="vertical-center">
+          <button type="submit" [disabled]="!form.valid" class="btn btn-primary btnsignin">sign in</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<div class="container" style=" width: 100%;">
+  <button type="button" class=" forgotbtn text-center" data-toggle="modal" data-target="#modalRelatedContent">Forgot
+    password?
+  </button>
+</div>
+<!-- Button trigger modal-->
+
+
+<!--Modal: modalRelatedContent-->
+<div class="modal fade " id="modalRelatedContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-side modal-bottom-right modal-notify modal-info" role="document">
+    <!--Content-->
+    <div class="modal-content">
+      <!--Header-->
+      <button style="float: right;" type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <span aria-hidden="true" class="white-text">&times;</span>
+      </button>
+      <form action="">
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-12">
+              <p><strong>Forgot password? </strong></p>
+              <input type="text" required #mail class="form-control" placeholder="Enter mail id" name="" id="">
+              <p *ngIf="fmail" style="color: red; font: 10px;">Provide email id</p>
+              <p *ngIf="pls" style="color:blue; font: 10px;">Please check your mail</p>
+              <button type="button" class="btn btn-info btn-md" (click)="forgotPassword(mail.value)">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalRelatedContent-->

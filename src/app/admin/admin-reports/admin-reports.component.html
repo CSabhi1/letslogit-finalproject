@@ -1,0 +1,76 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" routerLink="/adminp">
+      <span style="color: #5e57e4;">Let's</span> Log it
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/adminp">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="/adminp/reports">Summary</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{name}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Log out</a>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<br>
+<div class="container">
+  <p class=" mb-0" style="font-size: 18px; font-weight: 700; margin-left: 31px;">Project Summary</p>
+  <div class="row m-0">
+    <div class="col-md-12">
+      <div id="teamSummary">
+        <canvas id="teamSummaryChart">
+        </canvas>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="container ">
+  <p class=" mb-0" style="font-size: 18px; font-weight: 700; margin-left: 36px;">Individual Summary</p>
+  <br>
+  <div class="row  m-0">
+    <div class="col-md-3">
+
+      <select style="font-size: small" (change)="getProjectTasks($event.target.value)" class="custom-select ml-4 txtbox">
+        <!-- <option id="startDate" value="{{startFiDate}}">{{startFiDate}}</option> -->
+        <!-- <option *ngFor="let projects of employeeProjectList " value={{projects.id}}>
+      {{projects.name}}</option> -->
+
+        <option *ngFor="let projects of projectList; let i = index" [value]="projects.id" [selected]="i==0">
+          {{projects.name}}</option>
+      </select>
+    </div>
+    <div class="col-md-12 ">
+      <div id="teamSummary2">
+        <canvas id="teamSummaryChart2">
+        </canvas>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+<br>
+<br>
+<div id="footer">
+  <div class="container text-center">
+    <p class="text-muted credit " style="font-size: smaller;"> &nbsp; <span style="color: #5e57e4;">Let's</span> Log it 2020</p>
+  </div>
+</div>

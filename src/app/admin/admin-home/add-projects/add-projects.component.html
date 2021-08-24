@@ -1,0 +1,41 @@
+<label for=""><strong>Add new projects</strong> </label>
+<br>
+<form (submit)="addProject(addProjectForm)" #addProjectForm="ngForm" [formGroup]=form>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationServer01" style="font-size: 14px"> <i>Name of the project</i> </label>
+      <input type="text" style="height: 33px" ngModel name="projectName" class="form-control"
+        formControlName="projectName"
+        [ngClass]="{'is-invalid':form.get('projectName').touched && form.get('projectName').invalid}" required>
+      <div class="invalid-feedback">
+        Enter a name
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationServer02" style="font-size: 14px"> <i>Select year</i> </label>
+      <select style="height: 33px;font-size: 14px;" formControlName="projectManager" class="custom-select"
+        [ngClass]="{'is-invalid':form.get('projectManager').touched && form.get('projectManager').invalid}" required>
+        <option style="font-size: 14px;" disabled="true" value="">Select manager</option>
+        <option style="font-size: 14px;" *ngFor="let manager of managerList.data " [value]="manager.id">{{manager.name}}
+        </option>
+      </select>
+      <div class="invalid-feedback">
+        Choose a project manager
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-12 mb-3">
+      <label for="validationServer03" style="font-size: 14px"> <i>Description</i> </label>
+      <input type="text" style="height: 33px" formControlName="projectDescription" class="form-control "
+        id="validationServer03"
+        [ngClass]="{'is-invalid':form.get('projectDescription').touched && form.get('projectDescription').invalid}"
+        required>
+      <div class="invalid-feedback">
+        Please provide a description.
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-primary" style="font-size: 14px;height: 33px" [disabled]="!form.valid"
+    type="submit">Submit</button>
+</form>

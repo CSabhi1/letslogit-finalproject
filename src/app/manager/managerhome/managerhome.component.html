@@ -1,0 +1,182 @@
+<!-- Nav bar -->
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" routerLink="/manager">
+      <span style="color: #5e57e4;">Let's</span> Log it
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/manager">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/managersummary">Summary</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{name}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Log out</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+
+<div class="row container rowprjdetails" style="margin: auto; margin-bottom: 30px; ">
+  <div class="col-sm-4 container-fluid">
+    <div class="col-sm-12  ">
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+            aria-selected="true">
+            <p style="font-size: large; font-weight: 700">{{managerProjectList.data[0].name}}</p> </a>
+        </li>
+      </ul>
+      <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+          <br>
+          <p style="font-size: 14px;"><i>{{managerProjectList.data[0].description}}</i></p>
+         <div class="row">
+          <div class="col-md-12">
+            <label for="" style="font-weight: 700;">Team status <span style="font-weight: 600; font-size: small;">(Tasks)</span></label>
+            <div id="team">
+              <canvas id="teamChart">
+              </canvas>
+            </div>
+          </div>
+         </div>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <div class="col-sm-12">
+      <label for=""><strong>Allocate employees</strong> </label>
+      <app-add-employee></app-add-employee>
+    </div>
+    <div class="col-sm-12">
+      <hr>
+      <label for=""><strong>Create a new task</strong> </label>
+      <form (submit)="createTask(createForm)" #createForm="ngForm" [formGroup]=form>
+        <div class="form-group">
+          <input type="text" style="height: 33px;font-size: 14px;" placeholder="Describe task" ngModel name="TaskDec" class="form-control inputbox"
+            aria-describedby="emailHelp" formControlName="TaskDec"
+            [ngClass]="{'is-invalid':form.get('TaskDec').touched && form.get('TaskDec').invalid}" required>
+          <div class="invalid-feedback">
+            Task description required
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-sm-8 no-gutter">
+            <select formControlName="employee" style="height: 33px;font-size: 14px;" class="custom-select" id="inputGroupSelect01"
+              [ngClass]="{'is-invalid':form.get('employee').touched && form.get('employee').invalid}" required>
+              <option disabled="true" value="">Choose a team member</option>
+              <option *ngFor="let members of teamMemberList.data " [value]="members.id">{{members.id}} {{members.name}}
+              </option>
+            </select>
+            <div class="invalid-feedback">
+              Choose employee for the task
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div>
+              <button style="width: 100%; height: 33px;font-size: 14px;" type="submit" [disabled]="!form.valid"
+                class="btn btn-primary btnsignin">Create</button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <hr>
+    <label for="" style="font-weight: 700;"> &nbsp;&nbsp; My team</label>
+    <div class="row">
+      <div *ngFor="let person of myTeam1; let ind = index;" class="col-md-4 text-center">
+        <div>
+          <img style="width:80px; display: inline-block;"
+            src="https://img.icons8.com/color/96/000000/circled-user-male-skin-type-6.png" />
+          <h6 class="text-center" style="margin: auto; font-size: small;margin-bottom: 5px;">{{person.name}}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+     
+  <div class="col-sm-8 ">
+    <div>
+      <h6 class="mb-3"><strong>Approvals</strong> </h6>
+      <div class="accordion m-0" id="accordionExample">
+        <div class=""  *ngFor="let approval of approvalList ;let i = index ">
+          <div class="m-0" id="headingOne">
+              <div class="row">
+                <div class="col-md-8">
+                  <p style="font-size: 14px;padding: 0;margin: 0; font-weight: 600;">{{approval.task_desc}}</p>
+                  <p style="font-size: 14px;padding: 0;margin: 0;"><span style="font-size: 14px; color: darkblue;font-weight: 600;">Assignee :</span>&nbsp;{{approval.name}}</p>
+                  
+                </div>
+                <div class="col-md-2">
+                  <input type="button" style="width: 100%;height: 33px;font-size: 14px;color: white; background-color: rgb(35, 168, 35);"class="btn " (click)="approveTask(approval.id)" value="Approve">
+                </div>
+                <div class="col-md-2">
+                  <button class="btn" style="width: 100%;height: 33px;font-size: 14px;background-color: rgb(216, 34, 34);color: white;" type="button" data-toggle="collapse" attr.data-target="#collapse_{{i}}" aria-expanded="true" aria-controls="collapseOne">
+                  Reject
+                  </button>
+                </div>
+              </div>
+          </div>
+      
+          <div id="collapse_{{i}}" class="collapse " aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="">
+              <br>
+              <div class="row">
+                <div class="col-md-8"><input placeholder="Enter comments" #comment style="height:33px;font-size: 14px ;" class="form-control" type="text"></div>
+                <div class="col-md-2">
+                  <input type="button" (click)="rejectTask(approval.id,comment.value)"  style="width: 100%;height: 33px;font-size: 14px;color: white; background-color: rgb(9, 93, 172);"class="btn " value="Send">
+        
+                </div>
+
+              </div>
+            </div>
+            <br>
+          </div>
+          <hr style="margin-bottom: 9px; margin-top: 7px;">
+        </div>
+      
+      </div>
+    </div>
+
+    <div>
+      <h6 class="mt-4"><strong>Tasks</strong> </h6>
+      <p></p>
+      <div class="task">
+        <div class="row">
+          <div style="font-size: 14px; font-weight: 600;" class="col-sm-5">
+            Description</div>
+          <div style="font-size: 14px;font-weight: 600;" class="col-sm-3">Assignee</div>
+          <div style="font-size: 14px;font-weight: 600;" class="col-sm-3">Status </div>
+          <div style="font-size: 14px;font-weight: 600;" class="col-sm-1">Progress</div>
+        </div>
+
+      </div>
+      <br>
+      <div class="task" *ngFor="let task of taskList.data ">
+        <div class="row">
+          <div style="font-size: 14px;" class="col-sm-5">
+            {{task.task_desc}}</div>
+          <div style="font-size: 14px;" class="col-sm-3">{{task.name}}</div>
+          <div style="font-size: 14px;" class="col-sm-3"> <i>{{task.status}}</i>  </div>
+          <div style="font-size: 14px;" class="col-sm-1">{{task.percentage}}%</div>
+        </div>
+        <hr style="margin-bottom: 8px; margin-top: 8px;">
+      </div>
+    </div>
+  </div>
+</div>

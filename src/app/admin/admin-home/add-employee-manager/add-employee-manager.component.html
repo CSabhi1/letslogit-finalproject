@@ -1,0 +1,53 @@
+<label for=""><strong>Add new employee</strong> </label>
+<br>
+<form  (submit)="addManagerEmployee(addProjectForm)" #addProjectForm="ngForm"[formGroup]=form>
+  <div class="form-row">
+    <div class="col-md-6 mb-3">
+      <label for="validationServer01" style="font-size: 14px"> <i>Name</i> </label>
+      <input type="text" style="height: 33px" ngModel name="Name" class="form-control"
+      formControlName="Name"
+      [ngClass]="{'is-invalid':form.get('Name').touched && form.get('Name').invalid}"
+      required >
+      <div class="invalid-feedback" >
+        Enter a name
+      </div>
+    </div>
+    <div class="col-md-6 mb-3">
+      <label for="validationServer02" style="font-size: 14px" > <i>Designation</i> </label>
+      <select style="height: 33px;font-size: 14px;" formControlName="User" class="custom-select" id="inputGroupSelect01"
+      [ngClass]="{'is-invalid':form.get('User').touched && form.get('User').invalid}"
+      required >
+      <option style="font-size: 14px;" disabled="true" value=""> Select designation</option>
+        <option style="font-size: 14px;" selected value="manager">Project manager</option>
+        <option style="font-size: 14px;" value="employee">Employee</option>
+
+      </select>
+
+      <div class="invalid-feedback" >
+        Choose one project manager / employee
+      </div>
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="col-md-7 mb-3">
+      <label for="validationServer03" style="font-size: 14px"> <i>E-mail</i> </label>
+      <input type="text" style="height: 33px" formControlName="Email" class="form-control " id="validationServer03"
+      [ngClass]="{'is-invalid':form.get('Email').touched && form.get('Email').invalid}"
+      required>
+      <div class="invalid-feedback">
+        Please provide e-mail.
+      </div>
+    </div>
+    <div class="col-md-5">
+      <label for="validationServer03" style="font-size: 14px"> <i>Password</i> </label>
+      <input type="text" formControlName="Password" style="height: 33px" class="form-control " id="validationServer04"
+      [ngClass]="{'is-invalid':form.get('Password').touched && form.get('Password').invalid}"
+      required>
+      <div class="invalid-feedback">
+        Please provide a password.
+      </div>
+    </div>
+
+  </div>
+  <button class="btn btn-primary" style="font-size: 14px;height: 33px" [disabled]="!form.valid" type="submit">Submit</button>
+</form>

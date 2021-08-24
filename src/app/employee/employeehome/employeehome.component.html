@@ -1,0 +1,119 @@
+<div class="container">
+  <nav class="navbar navbar-expand-lg navbar-light ">
+    <a class="navbar-brand" routerLink="/employee">
+      <span style="color: #5e57e4;">Let's</span> Log it
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+      aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item active">
+          <a class="nav-link" routerLink="/employee">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link"  routerLink="/employeesummary">Summary</a>
+        </li>
+
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            {{name}}
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Log out</a>
+
+          </div>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<div class="row container mt-4 " style="margin: auto; ">
+  <div class="col-sm-4 ">
+    <label for="Projects" style="font-size: large; font-weight: 700">Project</label>
+    <select style="font-size: small" (change)="getEmployeeSelectedProject($event.target.value)"
+      class="custom-select txtbox">
+      <option *ngFor="let projects of employeeProjectList; let i = index" [value]="projects.id" [selected]="i==0">
+        {{projects.name}}</option>
+    </select>
+    <div>
+      <br>
+      <label style="font-weight: 700; font-size: large;" for="">{{projectDetails[0].name}}</label> <br>
+      <label for=""><i style="font-size: small;color: rgb(95, 95, 95);">{{projectDetails[0]?.description}}</i></label>
+      <br>
+      Owner - <label for="" style="color: blueviolet;"><i>{{projectManager}}</i></label> <br>
+    </div>
+    <hr>
+    <div class="row">
+      <div class="col-md-12">
+        <label for="" style="font-weight: 700;">Team status <span style="font-weight: 600; font-size: small;">(Tasks)</span></label>
+        <div id="team">
+          <canvas id="teamChart">
+          </canvas>
+        </div>
+        <hr>
+      </div>
+      <div class="col-md-12">
+        <label for="" style="font-weight: 700;">Self status <span style="font-weight: 600; font-size: small;">(Tasks)</span></label>
+        <div id="self">
+          <canvas id="selfChart">
+          </canvas>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <label for="" style="font-weight: 700;">My team</label>
+    <div class="row">
+      <div *ngFor="let person of myTeam1; let ind = index;" class="col-md-4 text-center">
+        <div>
+          <img style="width:80px; display: inline-block;"
+            src="https://img.icons8.com/color/96/000000/circled-user-male-skin-type-6.png" />
+          <h6 class="text-center" style="margin: auto; font-size: small;margin-bottom: 5px;">{{person?.name}}</h6>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-8 ">
+    <br>
+    <label style="font-size: large; font-weight: 700;" for="">Notifications</label>
+    <p *ngIf="not" style="font-size: 14px">You dont have any notification for this project</p>
+    <div *ngFor="let notification of notificationList">
+      <div class="row">
+        <div class="col-md-8" >
+          <p style="padding: 0; margin: 0px; font-size: 14px;">Task "<span style="font-weight: 600;"> <i>{{notification?.task_desc}}</i> </span>" rejected by your manager {{projectManager}}</p>
+          <p style="padding: 0; margin: 0px; font-size: 14px;"> <img style="width:19px" src="https://www.flaticon.com/svg/static/icons/svg/2190/2190552.svg" alt="">  <i style="color: crimson;">&nbsp;{{notification.comments}}</i> </p>
+        </div>
+        <div class="col-md-2">
+          <input type="button" style="height: 27px;font-size: 14px;"  class="btn-success btns pr-4 pl-3" (click)=submitTask(notification.id) value="Resubmit">
+        </div>
+        <div class="col-md-2">
+          <input type="button" style="height: 27px;font-size: 14px;"  class="btn-success btns pr-3 pl-3" (click)=notNowTask(notification.id) value="Not now">
+        </div> 
+    </div>
+  <hr>
+    </div>
+    <label style="font-size: large; font-weight: 700;" for="">Tasks</label>
+    <div class="row pt-2 pb-2">
+      <div class="col-md-4"><label for="" style="font-size: 14px; font-weight: 600;">Description</label> </div>
+      <div class="col-md-2"><label for="" style="font-size: 14px;font-weight: 600;"> <i>Status</i></label></div>
+      <div class="col-md-2"> <label for="" style="font-size: 14px;font-weight: 600;">Progress %</label></div>
+      <div class="col-md-2"></div>
+      <div class="col-md-2"></div>
+      <hr style="margin-bottom: 10px; margin-top:10px; ">
+    </div>
+    <div *ngFor="let task of taskList" class="row pt-2 pb-2" style="border-bottom: 1px solid rgb(235, 235, 235);">
+      <div class="col-md-4"><label for="" style="font-size: 14px;">{{task?.task_desc}}</label> </div>
+      <div class="col-md-2"><label for="" [ngStyle]="task.status=='Completed'?{'color':'green'}  : {'background-color': 'white'}" style="font-size: 14px;"> <i>{{task?.status}}</i></label></div>
+      <div class="col-md-2"> <input type="text" style="height: 27px" class="form-control" #percentage
+          value="{{task.percentage}}"> </div>
+      <div class="col-md-2"><input style="height: 27px;font-size: 14px;" class="btn-primary btns pr-4 pl-4"
+          type="button" (click)="updateStatus(task.id,percentage.value)" [disabled]="(task.status== 'Waiting for approval')" *ngIf="(task.status!= 'Completed')" value="update"></div>
+      <div class="col-md-2"><input style="height: 27px;font-size: 14px;" class=" btn-success btns pr-4 pl-4"
+          type="button" (click)="submitTask(task.id)" *ngIf="(task.status!= 'Completed')" [disabled]="(task.percentage != 100 || task.status== 'Waiting for approval')" value="submit"></div>
+      <hr style="margin-bottom: 10px; margin-top:10px; ">
+    </div>
+  </div>
+</div>
+<br>

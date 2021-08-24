@@ -1,0 +1,24 @@
+<form (submit)="addEmployee(addemployeeForm)" #addemployeeForm="ngForm" [formGroup]=formAddEmployee>
+  <div class="row">
+    <div class="col-sm-8 no-gutter">
+      <select formControlName="addemployee" style="height: 33px;font-size: 14px;" class="custom-select"
+        [ngClass]="{'is-invalid':formAddEmployee.get('addemployee').touched && formAddEmployee.get('addemployee').invalid}"
+        required>
+        <option disabled="true" value="">Choose a employee</option>
+        <option *ngFor="let employee of employeeList.data " [value]="employee.id">{{employee.id}} {{employee.name}}
+        </option>
+      </select>
+
+      <div class="invalid-feedback">
+        Choose a employee from the list
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <div>
+        <button style="width: 100%;height: 33px;font-size: 14px;" type="submit" [disabled]="!formAddEmployee.valid"
+          class="btn btn-primary btnsignin">Add</button>
+      </div>
+
+    </div>
+  </div>
+</form>
